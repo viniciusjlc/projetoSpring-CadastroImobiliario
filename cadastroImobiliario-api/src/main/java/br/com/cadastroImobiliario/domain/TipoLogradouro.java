@@ -10,7 +10,7 @@ public class TipoLogradouro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipoLogradouroSequenceGenerator")
-    @SequenceGenerator(name = "tipoLogradouroSequenceGenerator", sequenceName = "tipo_logradouro_id_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "tipoLogradouroSequenceGenerator",  schema = "imobiliario", sequenceName = "tipo_logradouro_id_seq", initialValue = 1, allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

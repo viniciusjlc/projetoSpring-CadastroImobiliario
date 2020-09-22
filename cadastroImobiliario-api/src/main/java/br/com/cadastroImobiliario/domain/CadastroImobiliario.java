@@ -3,13 +3,15 @@ package br.com.cadastroImobiliario.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 
+import static br.com.cadastroImobiliario.util.StringUtil.removerMascaraTratamentoNulo;
+
 @Entity
 @Table(name = "cadastro_imobiliario", schema = "imobiliario")
 public class CadastroImobiliario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cadastroImobiliarioSequenceGenerator")
-    @SequenceGenerator(name = "cadastroImobiliarioSequenceGenerator", sequenceName = "cadastro_imobiliario_id_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "cadastroImobiliarioSequenceGenerator",  schema = "imobiliario", sequenceName = "cadastro_imobiliario_id_seq", initialValue = 1, allocationSize = 1)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -131,7 +133,7 @@ public class CadastroImobiliario implements Serializable {
                                UnidadeFederativa unidadeFederativa,
                                Usuario usuario) {
         this.id = cadastroImobiliario.id;
-        this.cep = cadastroImobiliario.cep;
+        this.cep = removerMascaraTratamentoNulo(cadastroImobiliario.cep);
         this.endereco = cadastroImobiliario.endereco;
         this.complemento = cadastroImobiliario.complemento;
         this.numero = cadastroImobiliario.numero;

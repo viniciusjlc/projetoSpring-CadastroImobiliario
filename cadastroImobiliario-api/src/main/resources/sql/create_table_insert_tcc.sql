@@ -1,3 +1,11 @@
+CREATE TABLE imobiliario.usuarios (
+	id serial NOT NULL,
+	email varchar(500) NOT NULL,
+	nome varchar(1000) NOT NULL,
+	senha varchar NOT NULL,
+	CONSTRAINT usuarios_pk PRIMARY KEY (id)
+);
+
 CREATE TABLE imobiliario.cadastro_imobiliario (
 	id serial NOT NULL,
 	cep varchar(8) NOT NULL,
@@ -8,8 +16,13 @@ CREATE TABLE imobiliario.cadastro_imobiliario (
 	bairro varchar(500) NULL,
 	cidade varchar NULL,
 	id_unidade_federativa int4 NULL,
+	id_usuario int4 NULL,
 	CONSTRAINT cadastro_imobiliario_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE imobiliario.cadastro_imobiliario ADD CONSTRAINT cadastro_imobiliario_tipo_logradouro_fk FOREIGN KEY (id_tipo_logradouro) REFERENCES imobiliario.tipo_logradouro(id);
+ALTER TABLE imobiliario.cadastro_imobiliario ADD CONSTRAINT unidade_federativa_fk FOREIGN KEY (id_unidade_federativa) REFERENCES imobiliario.unidade_federativa(id);
+ALTER TABLE imobiliario.cadastro_imobiliario ADD CONSTRAINT usuario_fk FOREIGN KEY (id_usuario) REFERENCES imobiliario.usuarios(id);
 
 CREATE TABLE imobiliario.tipo_logradouro (
 	id serial NOT NULL,
@@ -33,10 +46,6 @@ CREATE TABLE imobiliario.documentos_cadastro_imobiliario (
 	id_cadastro_imobiliario int4 NULL,
 	CONSTRAINT documentos_cadastro_imobiliario_pk PRIMARY KEY (id)
 );
-
-ALTER TABLE imobiliario.cadastro_imobiliario ADD CONSTRAINT cadastro_imobiliario_tipo_logradouro_fk FOREIGN KEY (id_tipo_logradouro) REFERENCES imobiliario.tipo_logradouro(id);
-ALTER TABLE imobiliario.cadastro_imobiliario ADD CONSTRAINT unidade_federativa_fk FOREIGN KEY (id_unidade_federativa) REFERENCES imobiliario.unidade_federativa(id);
-ALTER TABLE imobiliario.documentos_cadastro_imobiliario ADD CONSTRAINT documentos_cadastro_imobiliario_fk FOREIGN KEY (id_cadastro_imobiliario) REFERENCES imobiliario.cadastro_imobiliario(id);
 
 INSERT INTO unidade_federativa VALUES (1, 'Acre', 'AC');
 INSERT INTO unidade_federativa VALUES (2, 'Alagoas', 'AL');
@@ -80,3 +89,7 @@ INSERT INTO imobiliario.tipo_logradouro (descricao) VALUES('Sitio');
 INSERT INTO imobiliario.tipo_logradouro (descricao) VALUES('Via Litorânea');
 INSERT INTO imobiliario.tipo_logradouro (descricao) VALUES('Via de Pedestre');
 
+
+INSERT INTO imobiliario.usuarios (email,nome,senha) VALUES
+('teste@teste.com','teste','$2a$10$WnI.b3wMWnVtuQlwgG95S.bSm.ZK3mHxTZDNkLYbIql5wujEuCe66');
+INSERT INTO imobiliario.cadastro_imobiliario (endereco,cep,complemento,id_tipo_logradouro,numero,bairro,cidade,id_unidade_federativa,id_usuario) VALUES ('179-7205 Ante Rd.','2028055','Kay Meyer',1,54,'neque sed dictum','Cusco',26,1)

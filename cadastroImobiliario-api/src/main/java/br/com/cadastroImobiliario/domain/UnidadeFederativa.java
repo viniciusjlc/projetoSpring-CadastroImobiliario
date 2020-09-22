@@ -10,7 +10,7 @@ public class UnidadeFederativa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unidadeFederativaSequenceGenerator")
-    @SequenceGenerator(name = "unidadeFederativaSequenceGenerator", sequenceName = "unidade_federativa_id_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "unidadeFederativaSequenceGenerator",  schema = "imobiliario", sequenceName = "unidade_federativa_id_seq", initialValue = 1, allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
